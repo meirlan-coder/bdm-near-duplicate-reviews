@@ -98,18 +98,20 @@ def main():
     mr_cols = ["#C2551F", "#D9773F", "#E89A63", "#F2C29C"]
     sp_cols = ["#1F4E80", "#2A6FB0", "#4F8CC7", "#7FA8D6", "#B3CCE8"]
     for ax, ds in zip(axes[0], dsets):
+        total = max(sum((x.get("seconds") or 0) for x in out[ds]["mapreduce_jobs"].values()),
+                    sum(x["seconds"] for x in out[ds]["spark_detect_stages"].values()))
         left = 0.0
         for col, (j, label) in zip(mr_cols, MR_LABELS.items()):
             v = out[ds]["mapreduce_jobs"].get(j, {}).get("seconds") or 0
             ax.barh(1, v, left=left, color=col, edgecolor="white")
-            if v > 0.06 * ax.get_xlim()[1] or v > 40:
+            if v > 0.07 * total:
                 ax.text(left + v / 2, 1, j, ha="center", va="center", color="white", fontsize=8)
             left += v
         left = 0.0
         for col, (s, st) in zip(sp_cols, out[ds]["spark_detect_stages"].items()):
             v = st["seconds"]
             ax.barh(0, v, left=left, color=col, edgecolor="white")
-            if v > 40:
+            if v > 0.07 * total:
                 ax.text(left + v / 2, 0, "S" + s, ha="center", va="center", color="white", fontsize=8)
             left += v
         ax.set_yticks([0, 1])
