@@ -1,0 +1,174 @@
+{
+  "1m": {
+    "mapreduce_jobs": {
+      "D1": {
+        "seconds": 104.07171654701233,
+        "cpu_s": 215.34333333333333,
+        "shuffle_mb": 510.27906799316406,
+        "map_output_records": 16720820.0,
+        "spilled_records": 50162460.0
+      },
+      "D2": {
+        "seconds": 27.759562174479168,
+        "cpu_s": 14.066666666666668,
+        "shuffle_mb": 1.496830940246582,
+        "map_output_records": 62773.0,
+        "spilled_records": 125546.0
+      },
+      "D3": {
+        "seconds": 35.602726221084595,
+        "cpu_s": 29.50333333333333,
+        "shuffle_mb": 225.7846097946167,
+        "map_output_records": 862953.0,
+        "spilled_records": 1725906.0
+      },
+      "D4": {
+        "seconds": 28.33159565925598,
+        "cpu_s": 13.38,
+        "shuffle_mb": 3.7070436477661133,
+        "map_output_records": 26912.0,
+        "spilled_records": 53824.0
+      },
+      "P": {
+        "seconds": 32.09840146700541,
+        "cpu_s": 8.69,
+        "shuffle_mb": 0.0,
+        "map_output_records": 836041.0,
+        "spilled_records": 0.0
+      }
+    },
+    "spark_detect_stages": {
+      "0": {
+        "seconds": 126.03066666666666,
+        "tasks": 4.0,
+        "executor_run_s": 274.47766666666666,
+        "shuffle_write_mb": 391.9514055252075,
+        "disk_spill_mb": 429.8124084472656,
+        "gc_s": 0.5556666666666666,
+        "label": "S0 read + shingle + MinHash + band keys (shuffle write)"
+      },
+      "1": {
+        "seconds": 55.97566666666666,
+        "tasks": 6.0,
+        "executor_run_s": 165.90666666666667,
+        "shuffle_write_mb": 0.36563682556152344,
+        "disk_spill_mb": 518.4137261708578,
+        "gc_s": 0.034666666666666665,
+        "label": "S1 group buckets -> pairs, distinct (map side)"
+      },
+      "2": {
+        "seconds": 6.198666666666667,
+        "tasks": 10.0,
+        "executor_run_s": 14.548666666666668,
+        "shuffle_write_mb": 173.0124193827311,
+        "disk_spill_mb": 0.0,
+        "gc_s": 0.027999999999999997,
+        "label": "S2 read shingle sets for join (map side)"
+      },
+      "3": {
+        "seconds": 6.6000000000000005,
+        "tasks": 10.0,
+        "executor_run_s": 19.157666666666668,
+        "shuffle_write_mb": 174.0758794148763,
+        "disk_spill_mb": 0.0,
+        "gc_s": 0.051,
+        "label": "S3 distinct + 1st join"
+      },
+      "4": {
+        "seconds": 2.408,
+        "tasks": 6.0,
+        "executor_run_s": 6.187,
+        "shuffle_write_mb": 0.0,
+        "disk_spill_mb": 0.0,
+        "gc_s": 0.024999999999999998,
+        "label": "S4 2nd join + Jaccard + write"
+      }
+    }
+  },
+  "5m": {
+    "mapreduce_jobs": {
+      "D1": {
+        "seconds": 416.1025226910909,
+        "cpu_s": 1291.7566666666667,
+        "shuffle_mb": 2551.5357208251953,
+        "map_output_records": 83608700.0,
+        "spilled_records": 249867900.0
+      },
+      "D2": {
+        "seconds": 35.509682734807335,
+        "cpu_s": 31.736666666666668,
+        "shuffle_mb": 36.485544204711914,
+        "map_output_records": 1530306.0,
+        "spilled_records": 3060612.0
+      },
+      "D3": {
+        "seconds": 83.0336955388387,
+        "cpu_s": 107.45,
+        "shuffle_mb": 1143.6067543029785,
+        "map_output_records": 4833379.0,
+        "spilled_records": 9666758.0
+      },
+      "D4": {
+        "seconds": 40.8729194800059,
+        "cpu_s": 27.596666666666664,
+        "shuffle_mb": 88.9220781326294,
+        "map_output_records": 652944.0,
+        "spilled_records": 1305888.0
+      },
+      "P": {
+        "seconds": 109.19789441426595,
+        "cpu_s": 77.93666666666667,
+        "shuffle_mb": 0.0,
+        "map_output_records": 4180435.0,
+        "spilled_records": 0.0
+      }
+    },
+    "spark_detect_stages": {
+      "0": {
+        "seconds": 606.878,
+        "tasks": 20.0,
+        "executor_run_s": 1706.1263333333334,
+        "shuffle_write_mb": 1903.6907488505046,
+        "disk_spill_mb": 2116.896607398987,
+        "gc_s": 1.851,
+        "label": "S0 read + shingle + MinHash + band keys (shuffle write)"
+      },
+      "1": {
+        "seconds": 230.60266666666666,
+        "tasks": 6.0,
+        "executor_run_s": 689.0613333333334,
+        "shuffle_write_mb": 8.187649408976236,
+        "disk_spill_mb": 1577.75550587972,
+        "gc_s": 0.14633333333333334,
+        "label": "S1 group buckets -> pairs, distinct (map side)"
+      },
+      "2": {
+        "seconds": 32.27133333333333,
+        "tasks": 26.0,
+        "executor_run_s": 92.699,
+        "shuffle_write_mb": 865.4110215504965,
+        "disk_spill_mb": 0.0,
+        "gc_s": 0.2233333333333333,
+        "label": "S2 read shingle sets for join (map side)"
+      },
+      "3": {
+        "seconds": 121.927,
+        "tasks": 26.0,
+        "executor_run_s": 353.67066666666665,
+        "shuffle_write_mb": 887.0335547129313,
+        "disk_spill_mb": 1110.308537165324,
+        "gc_s": 0.286,
+        "label": "S3 distinct + 1st join"
+      },
+      "4": {
+        "seconds": 91.71066666666667,
+        "tasks": 6.0,
+        "executor_run_s": 269.06466666666665,
+        "shuffle_write_mb": 0.0,
+        "disk_spill_mb": 1126.8599583307903,
+        "gc_s": 0.09633333333333333,
+        "label": "S4 2nd join + Jaccard + write"
+      }
+    }
+  }
+}

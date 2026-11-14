@@ -1,0 +1,667 @@
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-mr
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-mr/prep
+
+$ hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.name=nddup-mr-P-sample -D mapreduce.job.reduces=0 -D stream.num.map.output.key.fields=1 -files /opt/project/mapreduce/streaming_util.py,/opt/project/build/nddup.zip,/opt/project/mapreduce/prep_mapper.py -cmdenv PYTHONPATH=.:nddup.zip -cmdenv PYTHONIOENCODING=utf-8 -cmdenv NDDUP_MAX_BUCKET=500 -cmdenv NDDUP_MIN_TOKENS=10 -cmdenv NDDUP_NUM_BANDS=20 -cmdenv NDDUP_ROWS_PER_BAND=5 -cmdenv NDDUP_SEED=42 -cmdenv NDDUP_SHINGLE_K=3 -cmdenv NDDUP_THRESHOLD=0.8 -input /nddup/raw/sample -output /nddup/work/eval-mr/prep -mapper python3 prep_mapper.py
+packageJobJar: [/tmp/hadoop-unjar8281407961130465158/] [] /tmp/streamjob7363391274887495709.jar tmpDir=null
+2026-11-14 00:02:58,022 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:02:58,192 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:02:58,399 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1794613744924_0008
+2026-11-14 00:02:58,859 INFO mapred.FileInputFormat: Total input files to process : 1
+2026-11-14 00:02:58,949 INFO mapreduce.JobSubmitter: number of splits:2
+2026-11-14 00:02:59,538 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1794613744924_0008
+2026-11-14 00:02:59,538 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-11-14 00:02:59,699 INFO conf.Configuration: resource-types.xml not found
+2026-11-14 00:02:59,700 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-11-14 00:02:59,765 INFO impl.YarnClientImpl: Submitted application application_1794613744924_0008
+2026-11-14 00:02:59,799 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1794613744924_0008/
+2026-11-14 00:02:59,800 INFO mapreduce.Job: Running job: job_1794613744924_0008
+2026-11-14 00:03:05,877 INFO mapreduce.Job: Job job_1794613744924_0008 running in uber mode : false
+2026-11-14 00:03:05,878 INFO mapreduce.Job:  map 0% reduce 0%
+2026-11-14 00:03:10,942 INFO mapreduce.Job:  map 100% reduce 0%
+2026-11-14 00:03:10,952 INFO mapreduce.Job: Job job_1794613744924_0008 completed successfully
+2026-11-14 00:03:11,032 INFO mapreduce.Job: Counters: 37
+	File System Counters
+		FILE: Number of bytes read=0
+		FILE: Number of bytes written=562306
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=20737917
+		HDFS: Number of bytes written=9319307
+		HDFS: Number of read operations=14
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=4
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Launched map tasks=2
+		Data-local map tasks=1
+		Rack-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=12584
+		Total time spent by all reduces in occupied slots (ms)=0
+		Total time spent by all map tasks (ms)=6292
+		Total vcore-milliseconds taken by all map tasks=6292
+		Total megabyte-milliseconds taken by all map tasks=6443008
+	Map-Reduce Framework
+		Map input records=40000
+		Map output records=33429
+		Input split bytes=202
+		Spilled Records=0
+		Failed Shuffles=0
+		Merged Map outputs=0
+		GC time elapsed (ms)=86
+		CPU time spent (ms)=1750
+		Physical memory (bytes) snapshot=529772544
+		Virtual memory (bytes) snapshot=4791922688
+		Total committed heap usage (bytes)=509607936
+		Peak Map Physical memory (bytes)=265080832
+		Peak Map Virtual memory (bytes)=2396205056
+	nddup
+		prep_dropped_reviews=6571
+		prep_input_reviews=40000
+		prep_output_reviews=33429
+	File Input Format Counters 
+		Bytes Read=20737715
+	File Output Format Counters 
+		Bytes Written=9319307
+2026-11-14 00:03:11,032 INFO streaming.StreamJob: Output directory: /nddup/work/eval-mr/prep
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-mr/buckets
+
+$ hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.name=nddup-mr-D1-sample -D mapreduce.job.reduces=6 -D stream.num.map.output.key.fields=1 -files /opt/project/mapreduce/streaming_util.py,/opt/project/build/nddup.zip,/opt/project/mapreduce/lsh_mapper.py,/opt/project/mapreduce/bucket_reducer.py -cmdenv PYTHONPATH=.:nddup.zip -cmdenv PYTHONIOENCODING=utf-8 -cmdenv NDDUP_MAX_BUCKET=500 -cmdenv NDDUP_MIN_TOKENS=10 -cmdenv NDDUP_NUM_BANDS=20 -cmdenv NDDUP_ROWS_PER_BAND=5 -cmdenv NDDUP_SEED=42 -cmdenv NDDUP_SHINGLE_K=3 -cmdenv NDDUP_THRESHOLD=0.8 -input /nddup/work/eval-mr/prep -output /nddup/work/eval-mr/buckets -mapper python3 lsh_mapper.py -reducer python3 bucket_reducer.py
+packageJobJar: [/tmp/hadoop-unjar7085807402173739362/] [] /tmp/streamjob5947797500881204157.jar tmpDir=null
+2026-11-14 00:03:14,187 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:03:14,355 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:03:14,569 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1794613744924_0009
+2026-11-14 00:03:15,104 INFO mapred.FileInputFormat: Total input files to process : 2
+2026-11-14 00:03:15,189 INFO mapreduce.JobSubmitter: number of splits:2
+2026-11-14 00:03:15,288 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1794613744924_0009
+2026-11-14 00:03:15,288 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-11-14 00:03:15,436 INFO conf.Configuration: resource-types.xml not found
+2026-11-14 00:03:15,436 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-11-14 00:03:15,498 INFO impl.YarnClientImpl: Submitted application application_1794613744924_0009
+2026-11-14 00:03:15,531 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1794613744924_0009/
+2026-11-14 00:03:15,533 INFO mapreduce.Job: Running job: job_1794613744924_0009
+2026-11-14 00:03:21,605 INFO mapreduce.Job: Job job_1794613744924_0009 running in uber mode : false
+2026-11-14 00:03:21,606 INFO mapreduce.Job:  map 0% reduce 0%
+2026-11-14 00:03:28,679 INFO mapreduce.Job:  map 100% reduce 0%
+2026-11-14 00:03:34,710 INFO mapreduce.Job:  map 100% reduce 50%
+2026-11-14 00:03:38,736 INFO mapreduce.Job:  map 100% reduce 100%
+2026-11-14 00:03:39,748 INFO mapreduce.Job: Job job_1794613744924_0009 completed successfully
+2026-11-14 00:03:39,821 INFO mapreduce.Job: Counters: 59
+	File System Counters
+		FILE: Number of bytes read=21394596
+		FILE: Number of bytes written=45043954
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=9319517
+		HDFS: Number of bytes written=51040
+		HDFS: Number of read operations=36
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=12
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Killed reduce tasks=1
+		Launched map tasks=2
+		Launched reduce tasks=6
+		Data-local map tasks=1
+		Rack-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=22904
+		Total time spent by all reduces in occupied slots (ms)=34904
+		Total time spent by all map tasks (ms)=11452
+		Total time spent by all reduce tasks (ms)=17452
+		Total vcore-milliseconds taken by all map tasks=11452
+		Total vcore-milliseconds taken by all reduce tasks=17452
+		Total megabyte-milliseconds taken by all map tasks=11726848
+		Total megabyte-milliseconds taken by all reduce tasks=17870848
+	Map-Reduce Framework
+		Map input records=33429
+		Map output records=668580
+		Map output bytes=20057400
+		Map output materialized bytes=21394632
+		Input split bytes=210
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=666501
+		Reduce shuffle bytes=21394632
+		Reduce input records=668580
+		Reduce output records=2320
+		Spilled Records=1337160
+		Shuffled Maps =12
+		Failed Shuffles=0
+		Merged Map outputs=12
+		GC time elapsed (ms)=749
+		CPU time spent (ms)=12340
+		Physical memory (bytes) snapshot=2580807680
+		Virtual memory (bytes) snapshot=19188289536
+		Total committed heap usage (bytes)=2371354624
+		Peak Map Physical memory (bytes)=550543360
+		Peak Map Virtual memory (bytes)=2392952832
+		Peak Reduce Physical memory (bytes)=301883392
+		Peak Reduce Virtual memory (bytes)=2404044800
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	nddup
+		lsh_docs_signed=33429
+		lsh_nonsingleton_buckets=1898
+		lsh_pair_emissions=2320
+	File Input Format Counters 
+		Bytes Read=9319307
+	File Output Format Counters 
+		Bytes Written=51040
+2026-11-14 00:03:39,821 INFO streaming.StreamJob: Output directory: /nddup/work/eval-mr/buckets
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-mr/pairs
+
+$ hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.name=nddup-mr-D2-sample -D mapreduce.job.reduces=6 -D stream.num.map.output.key.fields=2 -files /opt/project/mapreduce/streaming_util.py,/opt/project/build/nddup.zip,/opt/project/mapreduce/dedup_reducer.py -cmdenv PYTHONPATH=.:nddup.zip -cmdenv PYTHONIOENCODING=utf-8 -cmdenv NDDUP_MAX_BUCKET=500 -cmdenv NDDUP_MIN_TOKENS=10 -cmdenv NDDUP_NUM_BANDS=20 -cmdenv NDDUP_ROWS_PER_BAND=5 -cmdenv NDDUP_SEED=42 -cmdenv NDDUP_SHINGLE_K=3 -cmdenv NDDUP_THRESHOLD=0.8 -input /nddup/work/eval-mr/buckets -output /nddup/work/eval-mr/pairs -mapper cat -reducer python3 dedup_reducer.py
+packageJobJar: [/tmp/hadoop-unjar7728435962273923606/] [] /tmp/streamjob1458601217389678830.jar tmpDir=null
+2026-11-14 00:03:42,906 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:03:43,064 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:03:43,254 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1794613744924_0010
+2026-11-14 00:03:43,736 INFO mapred.FileInputFormat: Total input files to process : 6
+2026-11-14 00:03:43,826 INFO mapreduce.JobSubmitter: number of splits:6
+2026-11-14 00:03:44,323 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1794613744924_0010
+2026-11-14 00:03:44,323 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-11-14 00:03:44,464 INFO conf.Configuration: resource-types.xml not found
+2026-11-14 00:03:44,465 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-11-14 00:03:44,525 INFO impl.YarnClientImpl: Submitted application application_1794613744924_0010
+2026-11-14 00:03:44,558 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1794613744924_0010/
+2026-11-14 00:03:44,559 INFO mapreduce.Job: Running job: job_1794613744924_0010
+2026-11-14 00:03:49,623 INFO mapreduce.Job: Job job_1794613744924_0010 running in uber mode : false
+2026-11-14 00:03:49,624 INFO mapreduce.Job:  map 0% reduce 0%
+2026-11-14 00:03:54,701 INFO mapreduce.Job:  map 50% reduce 0%
+2026-11-14 00:03:58,733 INFO mapreduce.Job:  map 100% reduce 0%
+2026-11-14 00:04:03,768 INFO mapreduce.Job:  map 100% reduce 33%
+2026-11-14 00:04:04,774 INFO mapreduce.Job:  map 100% reduce 50%
+2026-11-14 00:04:07,795 INFO mapreduce.Job:  map 100% reduce 100%
+2026-11-14 00:04:07,801 INFO mapreduce.Job: Job job_1794613744924_0010 completed successfully
+2026-11-14 00:04:07,869 INFO mapreduce.Job: Counters: 55
+	File System Counters
+		FILE: Number of bytes read=58036
+		FILE: Number of bytes written=3495290
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=51688
+		HDFS: Number of bytes written=3212
+		HDFS: Number of read operations=48
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=12
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Launched map tasks=6
+		Launched reduce tasks=6
+		Data-local map tasks=6
+		Total time spent by all maps in occupied slots (ms)=33338
+		Total time spent by all reduces in occupied slots (ms)=33866
+		Total time spent by all map tasks (ms)=16669
+		Total time spent by all reduce tasks (ms)=16933
+		Total vcore-milliseconds taken by all map tasks=16669
+		Total vcore-milliseconds taken by all reduce tasks=16933
+		Total megabyte-milliseconds taken by all map tasks=17069056
+		Total megabyte-milliseconds taken by all reduce tasks=17339392
+	Map-Reduce Framework
+		Map input records=2320
+		Map output records=2320
+		Map output bytes=53360
+		Map output materialized bytes=58216
+		Input split bytes=648
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=146
+		Reduce shuffle bytes=58216
+		Reduce input records=2320
+		Reduce output records=146
+		Spilled Records=4640
+		Shuffled Maps =36
+		Failed Shuffles=0
+		Merged Map outputs=36
+		GC time elapsed (ms)=1078
+		CPU time spent (ms)=8540
+		Physical memory (bytes) snapshot=4355801088
+		Virtual memory (bytes) snapshot=28752490496
+		Total committed heap usage (bytes)=4019716096
+		Peak Map Physical memory (bytes)=548548608
+		Peak Map Virtual memory (bytes)=2393571328
+		Peak Reduce Physical memory (bytes)=290639872
+		Peak Reduce Virtual memory (bytes)=2403184640
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	nddup
+		candidate_pairs=146
+	File Input Format Counters 
+		Bytes Read=51040
+	File Output Format Counters 
+		Bytes Written=3212
+2026-11-14 00:04:07,870 INFO streaming.StreamJob: Output directory: /nddup/work/eval-mr/pairs
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-mr/joined
+
+$ hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.name=nddup-mr-D3-sample -D mapreduce.job.reduces=6 -D stream.num.map.output.key.fields=1 -files /opt/project/mapreduce/streaming_util.py,/opt/project/build/nddup.zip,/opt/project/mapreduce/join_mapper.py,/opt/project/mapreduce/join_reducer.py -cmdenv PYTHONPATH=.:nddup.zip -cmdenv PYTHONIOENCODING=utf-8 -cmdenv NDDUP_MAX_BUCKET=500 -cmdenv NDDUP_MIN_TOKENS=10 -cmdenv NDDUP_NUM_BANDS=20 -cmdenv NDDUP_ROWS_PER_BAND=5 -cmdenv NDDUP_SEED=42 -cmdenv NDDUP_SHINGLE_K=3 -cmdenv NDDUP_THRESHOLD=0.8 -input /nddup/work/eval-mr/prep -input /nddup/work/eval-mr/pairs -output /nddup/work/eval-mr/joined -mapper python3 join_mapper.py -reducer python3 join_reducer.py
+packageJobJar: [/tmp/hadoop-unjar2863067061225459481/] [] /tmp/streamjob3175420523397569389.jar tmpDir=null
+2026-11-14 00:04:11,025 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:04:11,187 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:04:11,379 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1794613744924_0011
+2026-11-14 00:04:11,919 INFO mapred.FileInputFormat: Total input files to process : 8
+2026-11-14 00:04:12,008 INFO mapreduce.JobSubmitter: number of splits:8
+2026-11-14 00:04:12,114 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1794613744924_0011
+2026-11-14 00:04:12,114 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-11-14 00:04:12,270 INFO conf.Configuration: resource-types.xml not found
+2026-11-14 00:04:12,270 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-11-14 00:04:12,328 INFO impl.YarnClientImpl: Submitted application application_1794613744924_0011
+2026-11-14 00:04:12,359 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1794613744924_0011/
+2026-11-14 00:04:12,361 INFO mapreduce.Job: Running job: job_1794613744924_0011
+2026-11-14 00:04:17,428 INFO mapreduce.Job: Job job_1794613744924_0011 running in uber mode : false
+2026-11-14 00:04:17,429 INFO mapreduce.Job:  map 0% reduce 0%
+2026-11-14 00:04:22,501 INFO mapreduce.Job:  map 38% reduce 0%
+2026-11-14 00:04:26,546 INFO mapreduce.Job:  map 75% reduce 0%
+2026-11-14 00:04:29,566 INFO mapreduce.Job:  map 100% reduce 0%
+2026-11-14 00:04:35,608 INFO mapreduce.Job:  map 100% reduce 17%
+2026-11-14 00:04:36,626 INFO mapreduce.Job:  map 100% reduce 50%
+2026-11-14 00:04:39,654 INFO mapreduce.Job:  map 100% reduce 83%
+2026-11-14 00:04:40,659 INFO mapreduce.Job:  map 100% reduce 100%
+2026-11-14 00:04:40,666 INFO mapreduce.Job: Job job_1794613744924_0011 completed successfully
+2026-11-14 00:04:40,736 INFO mapreduce.Job: Counters: 55
+	File System Counters
+		FILE: Number of bytes read=9529495
+		FILE: Number of bytes written=23006346
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=9323365
+		HDFS: Number of bytes written=103711
+		HDFS: Number of read operations=54
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=12
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Killed reduce tasks=1
+		Launched map tasks=8
+		Launched reduce tasks=6
+		Data-local map tasks=8
+		Total time spent by all maps in occupied slots (ms)=46540
+		Total time spent by all reduces in occupied slots (ms)=35038
+		Total time spent by all map tasks (ms)=23270
+		Total time spent by all reduce tasks (ms)=17519
+		Total vcore-milliseconds taken by all map tasks=23270
+		Total vcore-milliseconds taken by all reduce tasks=17519
+		Total megabyte-milliseconds taken by all map tasks=23828480
+		Total megabyte-milliseconds taken by all reduce tasks=17939456
+	Map-Reduce Framework
+		Map input records=33575
+		Map output records=33721
+		Map output bytes=9427473
+		Map output materialized bytes=9529747
+		Input split bytes=846
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=33429
+		Reduce shuffle bytes=9529747
+		Reduce input records=33721
+		Reduce output records=292
+		Spilled Records=67442
+		Shuffled Maps =48
+		Failed Shuffles=0
+		Merged Map outputs=48
+		GC time elapsed (ms)=1494
+		CPU time spent (ms)=14620
+		Physical memory (bytes) snapshot=5561843712
+		Virtual memory (bytes) snapshot=33568825344
+		Total committed heap usage (bytes)=4960288768
+		Peak Map Physical memory (bytes)=548122624
+		Peak Map Virtual memory (bytes)=2397818880
+		Peak Reduce Physical memory (bytes)=319397888
+		Peak Reduce Virtual memory (bytes)=2418311168
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=9322519
+	File Output Format Counters 
+		Bytes Written=103711
+2026-11-14 00:04:40,736 INFO streaming.StreamJob: Output directory: /nddup/work/eval-mr/joined
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-mr/similar
+
+$ hadoop jar /opt/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar -D mapreduce.job.name=nddup-mr-D4-sample -D mapreduce.job.reduces=6 -D stream.num.map.output.key.fields=2 -files /opt/project/mapreduce/streaming_util.py,/opt/project/build/nddup.zip,/opt/project/mapreduce/verify_reducer.py -cmdenv PYTHONPATH=.:nddup.zip -cmdenv PYTHONIOENCODING=utf-8 -cmdenv NDDUP_MAX_BUCKET=500 -cmdenv NDDUP_MIN_TOKENS=10 -cmdenv NDDUP_NUM_BANDS=20 -cmdenv NDDUP_ROWS_PER_BAND=5 -cmdenv NDDUP_SEED=42 -cmdenv NDDUP_SHINGLE_K=3 -cmdenv NDDUP_THRESHOLD=0.8 -input /nddup/work/eval-mr/joined -output /nddup/work/eval-mr/similar -mapper cat -reducer python3 verify_reducer.py
+packageJobJar: [/tmp/hadoop-unjar3941187290106319284/] [] /tmp/streamjob2597575702426117824.jar tmpDir=null
+2026-11-14 00:04:43,962 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:04:44,135 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+2026-11-14 00:04:44,336 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1794613744924_0012
+2026-11-14 00:04:44,794 INFO mapred.FileInputFormat: Total input files to process : 6
+2026-11-14 00:04:44,868 INFO mapreduce.JobSubmitter: number of splits:6
+2026-11-14 00:04:44,976 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1794613744924_0012
+2026-11-14 00:04:44,976 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-11-14 00:04:45,186 INFO conf.Configuration: resource-types.xml not found
+2026-11-14 00:04:45,186 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-11-14 00:04:45,279 INFO impl.YarnClientImpl: Submitted application application_1794613744924_0012
+2026-11-14 00:04:45,330 INFO mapreduce.Job: The url to track the job: http://master:8088/proxy/application_1794613744924_0012/
+2026-11-14 00:04:45,332 INFO mapreduce.Job: Running job: job_1794613744924_0012
+2026-11-14 00:04:50,411 INFO mapreduce.Job: Job job_1794613744924_0012 running in uber mode : false
+2026-11-14 00:04:50,411 INFO mapreduce.Job:  map 0% reduce 0%
+2026-11-14 00:04:55,471 INFO mapreduce.Job:  map 50% reduce 0%
+2026-11-14 00:04:59,511 INFO mapreduce.Job:  map 100% reduce 0%
+2026-11-14 00:05:05,553 INFO mapreduce.Job:  map 100% reduce 33%
+2026-11-14 00:05:06,569 INFO mapreduce.Job:  map 100% reduce 50%
+2026-11-14 00:05:08,580 INFO mapreduce.Job:  map 100% reduce 100%
+2026-11-14 00:05:09,591 INFO mapreduce.Job: Job job_1794613744924_0012 completed successfully
+2026-11-14 00:05:09,668 INFO mapreduce.Job: Counters: 57
+	File System Counters
+		FILE: Number of bytes read=104847
+		FILE: Number of bytes written=3588972
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=104353
+		HDFS: Number of bytes written=3627
+		HDFS: Number of read operations=48
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=12
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Launched map tasks=6
+		Launched reduce tasks=6
+		Data-local map tasks=4
+		Rack-local map tasks=2
+		Total time spent by all maps in occupied slots (ms)=34538
+		Total time spent by all reduces in occupied slots (ms)=30796
+		Total time spent by all map tasks (ms)=17269
+		Total time spent by all reduce tasks (ms)=15398
+		Total vcore-milliseconds taken by all map tasks=17269
+		Total vcore-milliseconds taken by all reduce tasks=15398
+		Total megabyte-milliseconds taken by all map tasks=17683456
+		Total megabyte-milliseconds taken by all reduce tasks=15767552
+	Map-Reduce Framework
+		Map input records=292
+		Map output records=292
+		Map output bytes=103969
+		Map output materialized bytes=105027
+		Input split bytes=642
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=146
+		Reduce shuffle bytes=105027
+		Reduce input records=292
+		Reduce output records=117
+		Spilled Records=584
+		Shuffled Maps =36
+		Failed Shuffles=0
+		Merged Map outputs=36
+		GC time elapsed (ms)=1959
+		CPU time spent (ms)=11720
+		Physical memory (bytes) snapshot=4594851840
+		Virtual memory (bytes) snapshot=28745043968
+		Total committed heap usage (bytes)=4254072832
+		Peak Map Physical memory (bytes)=554708992
+		Peak Map Virtual memory (bytes)=2394189824
+		Peak Reduce Physical memory (bytes)=288448512
+		Peak Reduce Virtual memory (bytes)=2399432704
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	nddup
+		similar_pairs=117
+		verified_pairs=146
+	File Input Format Counters 
+		Bytes Read=103711
+	File Output Format Counters 
+		Bytes Written=3627
+2026-11-14 00:05:09,668 INFO streaming.StreamJob: Output directory: /nddup/work/eval-mr/similar
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-spark
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-spark/prep
+
+$ /opt/spark/bin/spark-submit --name nddup-spark-P-sample --py-files /opt/project/build/nddup.zip /opt/project/spark/prep_job.py --params /opt/project/conf/lsh.json --metrics /opt/project/results/tmp/nddup-spark-P-sample.json --input /nddup/raw/sample --output /nddup/work/eval-spark/prep
+26/11/14 00:05:18 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/14 00:05:19 INFO SparkContext: Running Spark version 3.5.3
+26/11/14 00:05:19 INFO SparkContext: OS info Linux, 6.18.58.1-microsoft-standard-WSL2, amd64
+26/11/14 00:05:19 INFO SparkContext: Java version 1.8.0_512
+26/11/14 00:05:19 INFO ResourceUtils: ==============================================================
+26/11/14 00:05:19 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/11/14 00:05:19 INFO ResourceUtils: ==============================================================
+26/11/14 00:05:19 INFO SparkContext: Submitted application: nddup-prep
+26/11/14 00:05:19 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memoryOverhead -> name: memoryOverhead, amount: 512, script: , vendor: , cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 512, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/11/14 00:05:19 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+26/11/14 00:05:19 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/11/14 00:05:20 INFO SecurityManager: Changing view acls to: root
+26/11/14 00:05:20 INFO SecurityManager: Changing modify acls to: root
+26/11/14 00:05:20 INFO SecurityManager: Changing view acls groups to: 
+26/11/14 00:05:20 INFO SecurityManager: Changing modify acls groups to: 
+26/11/14 00:05:20 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: root; groups with view permissions: EMPTY; users with modify permissions: root; groups with modify permissions: EMPTY
+26/11/14 00:05:20 INFO Utils: Successfully started service 'sparkDriver' on port 33415.
+26/11/14 00:05:20 INFO SparkEnv: Registering MapOutputTracker
+26/11/14 00:05:20 INFO SparkEnv: Registering BlockManagerMaster
+26/11/14 00:05:20 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/11/14 00:05:20 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/11/14 00:05:20 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/11/14 00:05:20 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-d238a09a-dfdc-4e10-bdf7-b7ae98cbd918
+26/11/14 00:05:20 INFO MemoryStore: MemoryStore started with capacity 366.3 MiB
+26/11/14 00:05:20 INFO SparkEnv: Registering OutputCommitCoordinator
+26/11/14 00:05:20 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/11/14 00:05:20 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/11/14 00:05:20 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+26/11/14 00:05:21 INFO Configuration: resource-types.xml not found
+26/11/14 00:05:21 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/11/14 00:05:21 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (2048 MB per container)
+26/11/14 00:05:21 INFO Client: Will allocate AM container, with 1024 MB memory including 384 MB overhead
+26/11/14 00:05:21 INFO Client: Setting up container launch context for our AM
+26/11/14 00:05:21 INFO Client: Setting up the launch environment for our AM container
+26/11/14 00:05:21 INFO Client: Preparing resources for our AM container
+26/11/14 00:05:21 INFO Client: Uploading resource file:/opt/spark-3.5.3-bin-hadoop3/python/lib/pyspark.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0013/pyspark.zip
+26/11/14 00:05:21 INFO Client: Uploading resource file:/opt/spark-3.5.3-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0013/py4j-0.10.9.7-src.zip
+26/11/14 00:05:21 INFO Client: Uploading resource file:/opt/project/build/nddup.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0013/nddup.zip
+26/11/14 00:05:21 INFO Client: Uploading resource file:/tmp/spark-b1c074f1-6cce-400c-a1ae-c2d0804da997/__spark_conf__9143330286369850171.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0013/__spark_conf__.zip
+26/11/14 00:05:21 INFO SecurityManager: Changing view acls to: root
+26/11/14 00:05:21 INFO SecurityManager: Changing modify acls to: root
+26/11/14 00:05:21 INFO SecurityManager: Changing view acls groups to: 
+26/11/14 00:05:21 INFO SecurityManager: Changing modify acls groups to: 
+26/11/14 00:05:21 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: root; groups with view permissions: EMPTY; users with modify permissions: root; groups with modify permissions: EMPTY
+26/11/14 00:05:21 INFO Client: Submitting application application_1794613744924_0013 to ResourceManager
+26/11/14 00:05:22 INFO YarnClientImpl: Submitted application application_1794613744924_0013
+26/11/14 00:05:23 INFO Client: Application report for application_1794613744924_0013 (state: ACCEPTED)
+26/11/14 00:05:23 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1794614721981
+	 final status: UNDEFINED
+	 tracking URL: http://master:8088/proxy/application_1794613744924_0013/
+	 user: root
+26/11/14 00:05:25 INFO Client: Application report for application_1794613744924_0013 (state: RUNNING)
+26/11/14 00:05:25 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 172.19.0.3
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1794614721981
+	 final status: UNDEFINED
+	 tracking URL: http://master:8088/proxy/application_1794613744924_0013/
+	 user: root
+26/11/14 00:05:25 INFO YarnClientSchedulerBackend: Application application_1794613744924_0013 has started running.
+26/11/14 00:05:25 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 40399.
+26/11/14 00:05:25 INFO NettyBlockTransferService: Server created on client:40399
+26/11/14 00:05:25 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/11/14 00:05:25 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, client, 40399, None)
+26/11/14 00:05:25 INFO BlockManagerMasterEndpoint: Registering block manager client:40399 with 366.3 MiB RAM, BlockManagerId(driver, client, 40399, None)
+26/11/14 00:05:25 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, client, 40399, None)
+26/11/14 00:05:25 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, client, 40399, None)
+26/11/14 00:05:25 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> master, PROXY_URI_BASES -> http://master:8088/proxy/application_1794613744924_0013), /proxy/application_1794613744924_0013
+26/11/14 00:05:25 INFO SingleEventLogFileWriter: Logging events to file:/opt/project/results/spark-events/application_1794613744924_0013.inprogress
+26/11/14 00:05:25 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:25 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:29 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.4:46698) with ID 1,  ResourceProfileId 0
+26/11/14 00:05:29 INFO BlockManagerMasterEndpoint: Registering block manager worker2:32963 with 93.3 MiB RAM, BlockManagerId(1, worker2, 32963, None)
+26/11/14 00:05:30 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.3:39440) with ID 2,  ResourceProfileId 0
+26/11/14 00:05:30 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.4:46716) with ID 3,  ResourceProfileId 0
+26/11/14 00:05:30 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.8
+26/11/14 00:05:30 INFO BlockManagerMasterEndpoint: Registering block manager worker1:36439 with 93.3 MiB RAM, BlockManagerId(2, worker1, 36439, None)
+26/11/14 00:05:30 INFO BlockManagerMasterEndpoint: Registering block manager worker2:40305 with 93.3 MiB RAM, BlockManagerId(3, worker2, 40305, None)
+NDDUP_METRICS {"prep_input_reviews": 40000, "prep_output_reviews": 33429, "prep_dropped_reviews": 6571, "driver_seconds": 4.228524446487427, "application_id": "application_1794613744924_0013"}
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-spark/similar
+
+$ hdfs dfs -rm -r -f -skipTrash /nddup/work/eval-spark/pairs
+
+$ /opt/spark/bin/spark-submit --name nddup-spark-D-sample --py-files /opt/project/build/nddup.zip /opt/project/spark/detect_job.py --params /opt/project/conf/lsh.json --metrics /opt/project/results/tmp/nddup-spark-D-sample.json --input /nddup/work/eval-spark/prep --output /nddup/work/eval-spark/similar --partitions 6 --cache on --save-candidates /nddup/work/eval-spark/pairs
+26/11/14 00:05:40 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/11/14 00:05:41 INFO SparkContext: Running Spark version 3.5.3
+26/11/14 00:05:41 INFO SparkContext: OS info Linux, 6.18.58.1-microsoft-standard-WSL2, amd64
+26/11/14 00:05:41 INFO SparkContext: Java version 1.8.0_512
+26/11/14 00:05:41 INFO ResourceUtils: ==============================================================
+26/11/14 00:05:41 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/11/14 00:05:41 INFO ResourceUtils: ==============================================================
+26/11/14 00:05:41 INFO SparkContext: Submitted application: nddup-detect-cache-on
+26/11/14 00:05:41 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memoryOverhead -> name: memoryOverhead, amount: 512, script: , vendor: , cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 512, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/11/14 00:05:41 INFO ResourceProfile: Limiting resource is cpus at 1 tasks per executor
+26/11/14 00:05:41 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/11/14 00:05:42 INFO SecurityManager: Changing view acls to: root
+26/11/14 00:05:42 INFO SecurityManager: Changing modify acls to: root
+26/11/14 00:05:42 INFO SecurityManager: Changing view acls groups to: 
+26/11/14 00:05:42 INFO SecurityManager: Changing modify acls groups to: 
+26/11/14 00:05:42 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: root; groups with view permissions: EMPTY; users with modify permissions: root; groups with modify permissions: EMPTY
+26/11/14 00:05:42 INFO Utils: Successfully started service 'sparkDriver' on port 44113.
+26/11/14 00:05:42 INFO SparkEnv: Registering MapOutputTracker
+26/11/14 00:05:42 INFO SparkEnv: Registering BlockManagerMaster
+26/11/14 00:05:42 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/11/14 00:05:42 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/11/14 00:05:42 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/11/14 00:05:42 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-ca10ae86-1d56-475a-a2a8-06a6402ae280
+26/11/14 00:05:42 INFO MemoryStore: MemoryStore started with capacity 366.3 MiB
+26/11/14 00:05:42 INFO SparkEnv: Registering OutputCommitCoordinator
+26/11/14 00:05:42 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/11/14 00:05:42 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/11/14 00:05:42 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master/172.19.0.2:8032
+26/11/14 00:05:43 INFO Configuration: resource-types.xml not found
+26/11/14 00:05:43 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/11/14 00:05:43 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (2048 MB per container)
+26/11/14 00:05:43 INFO Client: Will allocate AM container, with 1024 MB memory including 384 MB overhead
+26/11/14 00:05:43 INFO Client: Setting up container launch context for our AM
+26/11/14 00:05:43 INFO Client: Setting up the launch environment for our AM container
+26/11/14 00:05:43 INFO Client: Preparing resources for our AM container
+26/11/14 00:05:43 INFO Client: Uploading resource file:/opt/spark-3.5.3-bin-hadoop3/python/lib/pyspark.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0014/pyspark.zip
+26/11/14 00:05:43 INFO Client: Uploading resource file:/opt/spark-3.5.3-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0014/py4j-0.10.9.7-src.zip
+26/11/14 00:05:43 INFO Client: Uploading resource file:/opt/project/build/nddup.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0014/nddup.zip
+26/11/14 00:05:43 INFO Client: Uploading resource file:/tmp/spark-1f80c604-45c6-4b93-9586-47f9d0d074e1/__spark_conf__3856000086138984516.zip -> hdfs://master:9000/user/root/.sparkStaging/application_1794613744924_0014/__spark_conf__.zip
+26/11/14 00:05:43 INFO SecurityManager: Changing view acls to: root
+26/11/14 00:05:43 INFO SecurityManager: Changing modify acls to: root
+26/11/14 00:05:43 INFO SecurityManager: Changing view acls groups to: 
+26/11/14 00:05:43 INFO SecurityManager: Changing modify acls groups to: 
+26/11/14 00:05:43 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: root; groups with view permissions: EMPTY; users with modify permissions: root; groups with modify permissions: EMPTY
+26/11/14 00:05:43 INFO Client: Submitting application application_1794613744924_0014 to ResourceManager
+26/11/14 00:05:43 INFO YarnClientImpl: Submitted application application_1794613744924_0014
+26/11/14 00:05:44 INFO Client: Application report for application_1794613744924_0014 (state: ACCEPTED)
+26/11/14 00:05:44 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1794614743848
+	 final status: UNDEFINED
+	 tracking URL: http://master:8088/proxy/application_1794613744924_0014/
+	 user: root
+26/11/14 00:05:46 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> master, PROXY_URI_BASES -> http://master:8088/proxy/application_1794613744924_0014), /proxy/application_1794613744924_0014
+26/11/14 00:05:46 INFO Client: Application report for application_1794613744924_0014 (state: RUNNING)
+26/11/14 00:05:46 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 172.19.0.4
+	 ApplicationMaster RPC port: -1
+	 queue: default
+	 start time: 1794614743848
+	 final status: UNDEFINED
+	 tracking URL: http://master:8088/proxy/application_1794613744924_0014/
+	 user: root
+26/11/14 00:05:46 INFO YarnClientSchedulerBackend: Application application_1794613744924_0014 has started running.
+26/11/14 00:05:46 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 39669.
+26/11/14 00:05:46 INFO NettyBlockTransferService: Server created on client:39669
+26/11/14 00:05:46 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/11/14 00:05:46 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, client, 39669, None)
+26/11/14 00:05:46 INFO BlockManagerMasterEndpoint: Registering block manager client:39669 with 366.3 MiB RAM, BlockManagerId(driver, client, 39669, None)
+26/11/14 00:05:46 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, client, 39669, None)
+26/11/14 00:05:46 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, client, 39669, None)
+26/11/14 00:05:47 INFO SingleEventLogFileWriter: Logging events to file:/opt/project/results/spark-events/application_1794613744924_0014.inprogress
+26/11/14 00:05:47 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:47 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/11/14 00:05:50 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.3:48134) with ID 1,  ResourceProfileId 0
+26/11/14 00:05:51 INFO BlockManagerMasterEndpoint: Registering block manager worker1:35973 with 93.3 MiB RAM, BlockManagerId(1, worker1, 35973, None)
+26/11/14 00:05:52 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.4:40400) with ID 2,  ResourceProfileId 0
+26/11/14 00:05:52 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (172.19.0.3:48164) with ID 3,  ResourceProfileId 0
+26/11/14 00:05:52 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.8
+26/11/14 00:05:52 INFO BlockManagerMasterEndpoint: Registering block manager worker2:42461 with 93.3 MiB RAM, BlockManagerId(2, worker2, 42461, None)
+26/11/14 00:05:52 INFO BlockManagerMasterEndpoint: Registering block manager worker1:44947 with 93.3 MiB RAM, BlockManagerId(3, worker1, 44947, None)
+NDDUP_METRICS {"lsh_docs_signed": 33429, "lsh_nonsingleton_buckets": 1898, "lsh_pair_emissions": 2320, "lsh_oversized_buckets": 0, "lsh_reviews_in_oversized_buckets": 0, "candidate_pairs": 146, "verified_pairs": 146, "similar_pairs": 117, "driver_seconds": 15.657104253768921, "cache": "on", "partitions": 6, "application_id": "application_1794613744924_0014"}
+

@@ -1,0 +1,10 @@
+﻿{
+    "manufacturer":  "LENOVO",
+    "model":  "81SY",
+    "disk":  "HFM512GDHTNG-8310A (477 GB)",
+    "ram_gb":  15.9,
+    "logical_cpus":  8,
+    "cpu":  "Intel(R) Core(TM) i5-9300HF CPU @ 2.40GHz",
+    "physical_cores":  4,
+    "os":  "Майкрософт Windows 10 Pro 10.0.19045"
+}

@@ -1,0 +1,227 @@
+{
+  "params": {
+    "max_bucket": 500,
+    "min_tokens": 10,
+    "num_bands": 20,
+    "rows_per_band": 5,
+    "seed": 42,
+    "shingle_k": 3,
+    "threshold": 0.8
+  },
+  "reviews": 33429,
+  "all_pairs": 558732306,
+  "exact_seconds": 4.939631223678589,
+  "true_pairs": 117,
+  "lsh_threshold_estimate": 0.5492802716530588,
+  "theoretical_recall_at_threshold": 0.9996439421094793,
+  "frameworks": {
+    "mr": {
+      "candidate_pairs": 146,
+      "reported_pairs": 117,
+      "candidate_recall": 1.0,
+      "final_recall": 1.0,
+      "final_precision": 1.0,
+      "comparison_reduction": 0.999999738694186,
+      "candidate_precision": 0.8013698630136986,
+      "seconds_prep": 14.608558893203735,
+      "seconds_detect": 112.54439163208008,
+      "counters": {
+        "prep_input_reviews": 40000,
+        "prep_output_reviews": 33429,
+        "prep_dropped_reviews": 6571,
+        "lsh_docs_signed": 33429,
+        "lsh_nonsingleton_buckets": 1898,
+        "lsh_pair_emissions": 2320,
+        "lsh_oversized_buckets": 0,
+        "lsh_reviews_in_oversized_buckets": 0,
+        "candidate_pairs": 146,
+        "verified_pairs": 146,
+        "similar_pairs": 117
+      }
+    },
+    "spark": {
+      "candidate_pairs": 146,
+      "reported_pairs": 117,
+      "candidate_recall": 1.0,
+      "final_recall": 1.0,
+      "final_precision": 1.0,
+      "comparison_reduction": 0.999999738694186,
+      "candidate_precision": 0.8013698630136986,
+      "seconds_prep": 19.488559007644653,
+      "seconds_detect": 29.99686288833618,
+      "counters": {
+        "prep_input_reviews": 40000,
+        "prep_output_reviews": 33429,
+        "prep_dropped_reviews": 6571,
+        "lsh_docs_signed": 33429,
+        "lsh_nonsingleton_buckets": 1898,
+        "lsh_pair_emissions": 2320,
+        "lsh_oversized_buckets": 0,
+        "lsh_reviews_in_oversized_buckets": 0,
+        "candidate_pairs": 146,
+        "verified_pairs": 146,
+        "similar_pairs": 117
+      }
+    }
+  },
+  "identical_outputs": true,
+  "identical_candidates": true,
+  "s_curve": [
+    {
+      "bin": "[0.3, 0.4)",
+      "pairs": 43,
+      "candidates": 2,
+      "empirical_probability": 0.046511627906976744,
+      "theoretical_probability_mid": 0.09996405219511784
+    },
+    {
+      "bin": "[0.4, 0.5)",
+      "pairs": 1,
+      "candidates": 1,
+      "empirical_probability": 1.0,
+      "theoretical_probability_mid": 0.3109929597589812
+    },
+    {
+      "bin": "[0.5, 0.6)",
+      "pairs": 5,
+      "candidates": 3,
+      "empirical_probability": 0.6,
+      "theoretical_probability_mid": 0.6439846948142496
+    },
+    {
+      "bin": "[0.6, 0.7)",
+      "pairs": 6,
+      "candidates": 5,
+      "empirical_probability": 0.8333333333333334,
+      "theoretical_probability_mid": 0.9151289183523186
+    },
+    {
+      "bin": "[0.7, 0.8)",
+      "pairs": 4,
+      "candidates": 4,
+      "empirical_probability": 1.0,
+      "theoretical_probability_mid": 0.995563693487102
+    },
+    {
+      "bin": "[0.8, 0.9)",
+      "pairs": 3,
+      "candidates": 3,
+      "empirical_probability": 1.0,
+      "theoretical_probability_mid": 0.9999919443933685
+    },
+    {
+      "bin": "[0.9, 1.0]",
+      "pairs": 114,
+      "candidates": 114,
+      "empirical_probability": 1.0,
+      "theoretical_probability_mid": 0.9999999999998768
+    }
+  ],
+  "band_sensitivity": [
+    {
+      "b": 50,
+      "r": 2,
+      "threshold_estimate": 0.1414213562373095,
+      "candidate_pairs": 117208,
+      "candidate_recall": 1.0,
+      "comparison_reduction": 0.9997902251243729
+    },
+    {
+      "b": 25,
+      "r": 4,
+      "threshold_estimate": 0.4472135954999579,
+      "candidate_pairs": 281,
+      "candidate_recall": 1.0,
+      "comparison_reduction": 0.9999994970757964
+    },
+    {
+      "b": 20,
+      "r": 5,
+      "threshold_estimate": 0.5492802716530588,
+      "candidate_pairs": 146,
+      "candidate_recall": 1.0,
+      "comparison_reduction": 0.999999738694186
+    },
+    {
+      "b": 10,
+      "r": 10,
+      "threshold_estimate": 0.7943282347242815,
+      "candidate_pairs": 119,
+      "candidate_recall": 1.0,
+      "comparison_reduction": 0.999999787017864
+    },
+    {
+      "b": 5,
+      "r": 20,
+      "threshold_estimate": 0.9226808345905884,
+      "candidate_pairs": 113,
+      "candidate_recall": 0.9658119658119658,
+      "comparison_reduction": 0.9999997977564591
+    }
+  ],
+  "examples": [
+    {
+      "a": "R000501112",
+      "b": "R000501116",
+      "jaccard": 0.8918918918918919,
+      "text_a": "best swaddles ever these are my favorite swaddles even my big kids love to snuggle with these the bamboo is so soft they hold up well and don t get snagged nearly as easily as other brands",
+      "text_b": "best swaddle ever these are my favorite swaddles even my big kids love to snuggle with these the bamboo is so soft they hold up well and don t get snagged nearly as easily as other brands"
+    },
+    {
+      "a": "R002009644",
+      "b": "R002009645",
+      "jaccard": 0.8846153846153846,
+      "text_a": "so far so good if you can grab these for under a 1 with prime and subscribe and save they are worth it i just wish there was more variety on amazon with prices that beat my local target and walmart selection on amazon for other flavors and level 3 are slim",
+      "text_b": "loves it if you can grab these for under a 1 with prime and subscribe and save they are worth it i just wish there was more variety on amazon with prices that beat my local target and walmart selection on amazon for other flavors and level 3 are slim"
+    },
+    {
+      "a": "R002496748",
+      "b": "R002496749",
+      "jaccard": 0.8723404255319149,
+      "text_a": "cute but right around legs this diaper is adorable and works really well for overnights my son went 12 hours with no leaks the only downside is that this diaper is better suited for smaller legs the elastic was quite right on my son s chubby legs",
+      "text_b": "cute but tight around legs this diaper is adorable and works really well for overnights my son went 12 hours with no leaks the only downside is that this diaper is better suited for smaller legs the elastic was quite right on my son s chubby legs"
+    },
+    {
+      "a": "R000016514",
+      "b": "R000016515",
+      "jaccard": 0.9206349206349206,
+      "text_a": "great storage container they look so nice and collapse when u don t need them use them a lot and then fold them up and away they go and take no storage space highly recommend them very strong and can hold anything i need even heavy items are easy to carry because the handles are thick and don t cut into ur hands",
+      "text_b": "great containers they look so nice and collapse when u don t need them use them a lot and then fold them up and away they go and take no storage space highly recommend them very strong and can hold anything i need even heavy items are easy to carry because the handles are thick and don t cut into ur hands"
+    },
+    {
+      "a": "R003122484",
+      "b": "R003122486",
+      "jaccard": 0.952,
+      "text_a": "made with actual wood this growth charts price point is higher than the few others i have gotten over the years for my kids and now that i got it in the mail i know why it s actually wood not plastic paper cardboard or any other cheap material it s actually wood and it s a good thickness you get everything you need to hang it on the wall included inside just make sure you follow the directions bec",
+      "text_b": "cute and well made this growth charts price point is higher than the few others i have gotten over the years for my kids and now that i got it in the mail i know why it s actually wood not plastic paper cardboard or any other cheap material it s actually wood and it s a good thickness you get everything you need to hang it on the wall included inside just make sure you follow the directions becaus"
+    },
+    {
+      "a": "R003169070",
+      "b": "R003169071",
+      "jaccard": 0.9285714285714286,
+      "text_a": "warning sizing chart for openings is inaacurate warning in the specific case of the 57 50 to 60 25 opening the chart provided for openings is inaccurate i cannot speak to other measurements but i would not trust this chart note that the chart suggests parts a c c f where f is an indication not to use the one bar spacer included with the north states supergate auto close metal gate for a 57 50 to 6",
+      "text_b": "warning sizing chart for openings is inaacurate warning in the specific case of the 57 50 to 60 25 opening the chart provided for openings is inaccurate i cannot speak to other measurements but i would not trust this chart note that the chart suggests parts a c c f where f is an indication not to use the one bar spacer included with the north states supergate auto close metal gate for a 57 50 to 6"
+    },
+    {
+      "a": "R000029054",
+      "b": "R000029055",
+      "jaccard": 1.0,
+      "text_a": "baby shower gift gave this as a shower gift just today was received very happily",
+      "text_b": "baby shower gift gave this as a shower gift just today was received very happily"
+    },
+    {
+      "a": "R000128145",
+      "b": "R000128147",
+      "jaccard": 1.0,
+      "text_a": "mom and grandson very happy with this product better than expected",
+      "text_b": "mom and grandson very happy with this product better than expected"
+    },
+    {
+      "a": "R000128240",
+      "b": "R000128241",
+      "jaccard": 1.0,
+      "text_a": "a tale of two monitors i ve got four kids so i ve gone through a few sets of video and audio baby monitors before i tried the levana astra and stella these levanas are an improvement over my older monitors their primary drawback is the lack of a temp monitor for the room for small babies who should sleep with no blankets the room temp can make big difference in how well they sleep if you have an o",
+      "text_b": "a tale of two monitors i ve got four kids so i ve gone through a few sets of video and audio baby monitors before i tried the levana astra and stella these levanas are an improvement over my older monitors their primary drawback is the lack of a temp monitor for the room for small babies who should sleep with no blankets the room temp can make big difference in how well they sleep if you have an o"
+    }
+  ]
+}

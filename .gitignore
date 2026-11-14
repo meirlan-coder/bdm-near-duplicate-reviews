@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+build/
+data/
+results/tmp/
+results/.state/
+results/spark-events/
+results/logs/
+results/eval/exact_pairs.tsv
+results/eval/sample_prep.tsv
+results/outputs/
+.pytest_cache/

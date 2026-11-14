@@ -1,0 +1,62 @@
+Configured Capacity: 2162202353664 (1.97 TB)
+Present Capacity: 2033601208320 (1.85 TB)
+DFS Remaining: 2033601159168 (1.85 TB)
+DFS Used: 49152 (48 KB)
+DFS Used%: 0.00%
+Replicated Blocks:
+	Under replicated blocks: 0
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups: 
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+
+-------------------------------------------------
+Live datanodes (2):
+
+Name: 172.19.0.3:9866 (nddup-worker1.bdm-near-duplicate-reviews_default)
+Hostname: worker1
+Decommission Status : Normal
+Configured Capacity: 1081101176832 (1006.85 GB)
+DFS Used: 24576 (24 KB)
+Non DFS Used: 9308217344 (8.67 GB)
+DFS Remaining: 1016800579584 (946.97 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.05%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 0
+Last contact: Fri Nov 13 23:49:18 UTC 2026
+Last Block Report: Fri Nov 13 23:49:03 UTC 2026
+Num of Blocks: 0
+
+
+Name: 172.19.0.4:9866 (nddup-worker2.bdm-near-duplicate-reviews_default)
+Hostname: worker2
+Decommission Status : Normal
+Configured Capacity: 1081101176832 (1006.85 GB)
+DFS Used: 24576 (24 KB)
+Non DFS Used: 9308217344 (8.67 GB)
+DFS Remaining: 1016800579584 (946.97 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.05%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 0
+Last contact: Fri Nov 13 23:49:18 UTC 2026
+Last Block Report: Fri Nov 13 23:49:03 UTC 2026
+Num of Blocks: 0
+
+

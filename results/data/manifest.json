@@ -1,0 +1,28 @@
+{
+  "1m": {
+    "bytes": 515471093,
+    "reviews": 1000000,
+    "selection": "uniform random sample, seed 2026",
+    "source": "Amazon Reviews 2023 / Baby_Products",
+    "source_reviews": 6028884
+  },
+  "5m": {
+    "bytes": 2579735243,
+    "reviews": 5000000,
+    "selection": "uniform random sample, seed 2026",
+    "source": "Amazon Reviews 2023 / Baby_Products",
+    "source_reviews": 6028884
+  },
+  "sample": {
+    "bytes": 20733619,
+    "reviews": 40000,
+    "selection": "all reviews of 33153 random users (seed 2027)",
+    "source": "1m dataset",
+    "users": 33153
+  },
+  "smoke": {
+    "bytes": 9631905,
+    "reviews": 20000,
+    "source": "synthetic (scripts/make_synthetic.py)"
+  }
+}

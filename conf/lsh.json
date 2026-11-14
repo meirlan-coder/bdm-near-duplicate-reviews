@@ -1,0 +1,9 @@
+{
+  "shingle_k": 3,
+  "min_tokens": 10,
+  "num_bands": 20,
+  "rows_per_band": 5,
+  "seed": 42,
+  "threshold": 0.8,
+  "max_bucket": 500
+}

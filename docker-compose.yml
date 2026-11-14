@@ -1,0 +1,68 @@
+# Hadoop (HDFS + YARN + MapReduce) and Spark-on-YARN cluster for the benchmark.
+#
+#   master  : HDFS NameNode, YARN ResourceManager, MapReduce JobHistory server
+#   worker1 : HDFS DataNode, YARN NodeManager   (runs map/reduce tasks and Spark executors)
+#   worker2 : HDFS DataNode, YARN NodeManager
+#   client  : edge node - submits jobs (MR job client / Spark driver), runs the benchmark
+#
+# All containers run on ONE machine (Docker Desktop), see README "Limitations".
+# Resource profile: .env
+
+x-node: &node
+  build:
+    context: ./docker
+  image: bdm-nddup:1.0
+  env_file: .env
+  restart: "no"
+
+services:
+  master:
+    <<: *node
+    hostname: master
+    container_name: nddup-master
+    command: ["master"]
+    volumes:
+      - ./:/opt/project
+      - nn-data:/data
+    ports:
+      - "9870:9870"     # HDFS NameNode UI
+      - "8088:8088"     # YARN ResourceManager UI
+      - "19888:19888"   # MapReduce JobHistory UI
+
+  worker1:
+    <<: *node
+    hostname: worker1
+    container_name: nddup-worker1
+    command: ["worker"]
+    depends_on: [master]
+    volumes:
+      - ./:/opt/project
+      - worker1-data:/data
+
+  worker2:
+    <<: *node
+    hostname: worker2
+    container_name: nddup-worker2
+    command: ["worker"]
+    depends_on: [master]
+    volumes:
+      - ./:/opt/project
+      - worker2-data:/data
+
+  client:
+    <<: *node
+    hostname: client
+    container_name: nddup-client
+    command: ["client"]
+    depends_on: [master, worker1, worker2]
+    volumes:
+      - ./:/opt/project
+      - local-data:/localdata
+    ports:
+      - "4040:4040"     # Spark driver UI (while a Spark job runs)
+
+volumes:
+  nn-data:
+  worker1-data:
+  worker2-data:
+  local-data:

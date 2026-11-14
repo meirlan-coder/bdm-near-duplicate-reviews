@@ -1,0 +1,3 @@
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sde       1007G  8.7G  947G   1% /localdata
+C:\             264G  220G   44G  84% /opt/project
